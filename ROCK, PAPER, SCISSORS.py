@@ -16,12 +16,27 @@ def bittin(userselection):
     if comp=="rock" and userselection=="scissors":
         csc=csc+1
 
+    if comp=="paper" and userselection=="scissors":
+        ysc=ysc+1
+
+    if comp=="scissors" and userselection=="paper":
+        csc=csc+1
+
+    if comp=="paper" and userselection=="rock":
+        csc=csc+1
+
+    if comp=="rock" and userselection=="paper":
+        ysc=ysc+1
+
+    if comp=="scissors" and userselection=="rock":
+        ysc=ysc+1
+
     if comp==userselection:
         csc=csc+0
         ysc=ysc+0
 
-    label7.config(text="Computer Score: "+csc)
-    label9.config(text="Your Score: "+ysc)
+    label7.config(text="Computer Score: "+str(csc))
+    label9.config(text="Your Score: "+str(ysc))
 
 
 label=tkinter.Label(screen,text="Rock Paper Scissors",width=30,height=1)
