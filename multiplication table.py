@@ -2,15 +2,19 @@ import tkinter.ttk
 import tkinter
 
 screen=tkinter.Tk()
-screen.geometry("500x500")
+screen.geometry("500x600")
 screen.title("Hey! You found me! o^o")
 cbnl=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
 
 def bittin():
     ecb=int(cb.get())
     erb=int(rbsv.get())
-    print(ecb)
-    print(erb)
+    table=""
+    for i in range(1,erb+1):
+        table=table+(str(ecb)+"*"+str(i)+"="+str(ecb*i))+"\n"
+
+    label2.config(text=table)
+
 
 label=tkinter.Label(screen,text="MULTIPLICATION TABLE",font=("courier",25))
 label.grid(row=1, column=1, columnspan=3)
@@ -37,5 +41,5 @@ button=tkinter.Button(screen,text="TABLEIZE!",command=bittin)
 button.grid(row=3,column=2)
 
 label2=tkinter.Label(screen)
-label2.grid(row=4, column=2)
+label2.grid(row=5, column=2)
 screen.mainloop()
