@@ -1,3 +1,4 @@
+import tkinter.filedialog
 import tkinter
 
 screen=tkinter.Tk()
@@ -11,7 +12,47 @@ def addo():
     e=entry3.get()
     b=entry4.get()
     info[n]=[a,p,e,b]
-    print(info)
+    updatelistbox()
+    entry.delete(0,tkinter.END)
+    entry1.delete(0,tkinter.END)
+    entry2.delete(0,tkinter.END)
+    entry3.delete(0,tkinter.END)
+    entry4.delete(0,tkinter.END)
+
+
+def updatelistbox():
+    listbox.delete(0,tkinter.END)
+    names=info.keys()
+    for name in names:
+        listbox.insert(tkinter.END,name)
+
+def deleteo():
+    idk=listbox.curselection()
+    namey=listbox.get(idk)
+    del info[namey]
+    updatelistbox()
+
+def edito():
+    idka=listbox.curselection()
+    nameya=listbox.get(idka)
+    record=info[nameya]
+    entry1.insert(tkinter.END,record[0])
+    entry2.insert(tkinter.END,record[1])
+    entry3.insert(tkinter.END,record[2])
+    entry4.insert(tkinter.END,record[3])
+    entry.insert(tkinter.END,nameya)
+
+def saveo():
+    file1=tkinter.filedialog.asksaveasfile()
+    if file1 is not None:
+        print(info,file=file1)
+
+def openo():
+    global info
+    file1=tkinter.filedialog.askopenfile()
+    if file1 is not None:
+        info=eval(file1.read())
+        updatelistbox()
 
 label=tkinter.Label(screen,text="My Address Book:")
 label.grid(row=0, column=1)
@@ -49,19 +90,19 @@ entry4.grid(row=6, column=3)
 listbox=tkinter.Listbox(screen, width=50, height=10)
 listbox.grid(row=2,column=5, rowspan=5)
 
-button=tkinter.Button(screen, text="Open")
+button=tkinter.Button(screen, text="Open", command=openo)
 button.grid(row=0, column=4)
 
-button1=tkinter.Button(screen, text="Edit")
+button1=tkinter.Button(screen, text="Edit", command=edito)
 button1.grid(row=7, column=2)
 
-button2=tkinter.Button(screen,  text="Delete")
+button2=tkinter.Button(screen,  text="Delete", command=deleteo)
 button2.grid(row=7, column=3)
 
 button3=tkinter.Button(screen,  text="Update/Add",command=addo)
 button3.grid(row=7, column=4)
 
-button4=tkinter.Button(screen,text="Save")
+button4=tkinter.Button(screen,text="Save", command=saveo)
 button4.grid(row=8, column=2)
 
 screen.mainloop()
