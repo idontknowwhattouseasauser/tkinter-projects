@@ -11,9 +11,15 @@ canvas.grid(row=1,column=1)
 canvas.create_line(400,0,400,800,fill="white",width=5)
 circle=canvas.create_oval(400,400,600,600,outline="white",width=5)
 canvas.move(circle,-95,-180)
+scoreboard=canvas.create_text(50,580,text="Score: 0",fill="white")
+scoreboard1=canvas.create_text(750,580,text="Score: 0", fill="white")
+
+
 
 class Ball():
-    def __init__(self): #self is actualy not as entitled as you think!
+    def __init__(self, p1, p2): #self is actualy not as entitled as you think!
+        self.p1=p1
+        self.p2=p2
         self.ball=canvas.create_oval(10,10,30,30,fill="white")
         self.changex=5
         self.changey=5
@@ -36,6 +42,24 @@ class Ball():
 
         if self.position[3]>=600:
             self.changey=-5
+
+        canvas.itemconfigure(scoreboard,text="Score: "+str(self.score1))
+        canvas.itemconfigure(scoreboard1,text="Score: "+str(self.score2))
+
+    def collisioncheck(self):
+        posball=canvas.coords(self.ball)
+        posp1=canvas.coords(self.p1.rectangle)
+        posp2=canvas.coords(self.p2.rectangle)
+        if posball[3]>posp1[1] and posball[1]<posp1[3]:
+            if posball[0]<posp1[2]and posball[0]>posp1[0]:
+                self.changex=5
+
+        if posball[3]>posp2[1] and posball[1]<posp2[3]:
+            if posball[2]>posp2[0]and posball[0]<posp2[2]:
+                self.changex=-5
+
+        
+
 
 class Playerone():
     def __init__(self):
@@ -82,16 +106,16 @@ class Playertwo():
     def movedown(self, event): #how do you even do that?
         self.changey=+5
 
-
-ball=Ball()
 playerone=Playerone()
 playertwo=Playertwo()
+ball=Ball(playerone, playertwo)
 
 
 while True:
     ball.draw()
     playerone.draw()
     playertwo.draw()
+    ball.collisioncheck()
     screen.update_idletasks()
     screen.update()
     time.sleep(0.01)
